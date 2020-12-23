@@ -1,0 +1,216 @@
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 1
+
+
+
+
+
+       MCS-51 Family Macro Assembler   A S E M - 5 1   V 1.3
+       =====================================================
+
+
+
+	Source File:	D:\Data Kuliah\SEMESTER 5\PRAK. SISTEM MIKROPROSESOR\ultrasonik\ic89c51.asm
+	Object File:	D:\Data Kuliah\SEMESTER 5\PRAK. SISTEM MIKROPROSESOR\ultrasonik\ic89c51.hex
+	List File:	D:\Data Kuliah\SEMESTER 5\PRAK. SISTEM MIKROPROSESOR\ultrasonik\ic89c51.lst
+
+
+
+ Line  I  Addr  Code            Source
+
+    1:		N      0000	ORG 00H
+    2:	  0000	90 00 76	MOV DPTR,#LUT
+    3:	  0003	75 90 00	MOV P1,#00000000B
+    4:	  0006	75 80 00	MOV P0,#00000000B
+    5:	  0009	C2 B0		CLR P3.0
+    6:	  000B	D2 B1		SETB P3.1
+    7:	  000D	75 89 20	MOV TMOD,#00100000B
+    8:	  0010	75 8B CF	MAIN: MOV TL1,#207D
+    9:	  0013	75 8D CF	      MOV TH1,#207D
+   10:	  0016	74 00		      MOV A,#00000000B
+   11:	  0018	D2 B0		      SETB P3.0
+   12:	  001A	11 33		      ACALL DELAY1
+   13:	  001C	C2 B0		      CLR P3.0
+   14:	  001E	30 B1 FD	HERE: JNB P3.1,HERE
+   15:	  0021	D2 8E		BACK: SETB TR1
+   16:	  0023	30 8F FD	HERE1: JNB TF1,HERE1
+   17:	  0026	C2 8E		      CLR TR1
+   18:	  0028	C2 8F		      CLR TF1
+   19:	  002A	04		      INC A
+   20:	  002B	20 B1 F3	      JB P3.1,BACK
+   21:	  002E	FC		      MOV R4,A
+   22:	  002F	11 38		      ACALL DLOOP
+   23:	  0031	80 DD		      SJMP MAIN
+   24:
+   25:	  0033	7E 02		DELAY1: MOV R6,#2D
+   26:	  0035	DE FE		LABEL1: DJNZ R6,LABEL1
+   27:	  0037	22		        RET
+   28:
+   29:	  0038	7D 64		DLOOP: MOV R5,#100D
+   30:	  003A	EC		BACK1: MOV A,R4
+   31:	  003B	75 F0 64	       MOV B,#100D
+   32:	  003E	84		       DIV AB
+   33:	  003F	D2 90		       SETB P1.0
+   34:	  0041	11 73		       ACALL DISPLAY
+   35:	  0043	F5 80		       MOV P0,A
+   36:	  0045	11 6E		       ACALL DELAY
+   37:	  0047	11 6E		       ACALL DELAY
+   38:	  0049	E5 F0		       MOV A,B
+   39:	  004B	75 F0 0A	       MOV B,#10D
+   40:	  004E	84		       DIV AB
+   41:	  004F	C2 90		       CLR P1.0
+   42:	  0051	D2 91		       SETB P1.1
+   43:	  0053	11 73		       ACALL DISPLAY
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 2
+
+
+
+ Line  I  Addr  Code            Source
+
+   44:	  0055	F5 80		       MOV P0,A
+   45:	  0057	11 6E		       ACALL DELAY
+   46:	  0059	11 6E		       ACALL DELAY
+   47:	  005B	E5 F0		       MOV A,B
+   48:	  005D	C2 91		       CLR P1.1
+   49:	  005F	D2 92		       SETB P1.2
+   50:	  0061	11 73		       ACALL DISPLAY
+   51:	  0063	F5 80		       MOV P0,A
+   52:	  0065	11 6E		       ACALL DELAY
+   53:	  0067	11 6E		       ACALL DELAY
+   54:	  0069	C2 92		       CLR P1.2
+   55:	  006B	DD CD		       DJNZ R5,BACK1
+   56:	  006D	22		       RET
+   57:
+   58:	  006E	7F FA		DELAY: MOV R7,#250D
+   59:	  0070	DF FE		LABEL2: DJNZ R7,LABEL2
+   60:	  0072	22		        RET
+   61:
+   62:	  0073	93		DISPLAY: MOVC A,@A+DPTR
+   63:	  0074	F4		         CPL A
+   64:	  0075	22		         RET
+   65:	  0076	3F		LUT: DB 3FH
+   66:	  0077	06		     DB 06H
+   67:	  0078	5B		     DB 5BH
+   68:	  0079	4F		     DB 4FH
+   69:	  007A	66		     DB 66H
+   70:	  007B	6D		     DB 6DH
+   71:	  007C	7D		     DB 7DH
+   72:	  007D	07		     DB 07H
+   73:	  007E	7F		     DB 7FH
+   74:	  007F	6F		     DB 6FH
+   75:				END
+
+
+
+
+
+                     register banks used:  ---
+
+                     no errors
+
+
+
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 3
+
+
+
+
+
+	       L I S T   O F   S Y M B O L S
+	       =============================
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+??ASEM_51			  NUMBER    8051
+??VERSION			  NUMBER    0130
+AC				  BIT	      D6
+ACC				  DATA	      E0
+B				  DATA	      F0
+BACK				  CODE	    0021	  15
+BACK1				  CODE	    003A	  30
+CY				  BIT	      D7
+DELAY				  CODE	    006E	  58
+DELAY1				  CODE	    0033	  25
+DISPLAY				  CODE	    0073	  62
+DLOOP				  CODE	    0038	  29
+DPH				  DATA	      83
+DPL				  DATA	      82
+EA				  BIT	      AF
+ES				  BIT	      AC
+ET0				  BIT	      A9
+ET1				  BIT	      AB
+EX0				  BIT	      A8
+EX1				  BIT	      AA
+EXTI0				  CODE	    0003
+EXTI1				  CODE	    0013
+F0				  BIT	      D5
+HERE				  CODE	    001E	  14
+HERE1				  CODE	    0023	  16
+IE				  DATA	      A8
+IE0				  BIT	      89
+IE1				  BIT	      8B
+INT0				  BIT	      B2
+INT1				  BIT	      B3
+IP				  DATA	      B8
+IT0				  BIT	      88
+IT1				  BIT	      8A
+LABEL1				  CODE	    0035	  26
+LABEL2				  CODE	    0070	  59
+LUT				  CODE	    0076	  65
+MAIN				  CODE	    0010	   8
+OV				  BIT	      D2
+P				  BIT	      D0
+P0				  DATA	      80
+P1				  DATA	      90
+P2				  DATA	      A0
+P3				  DATA	      B0
+PCON				  DATA	      87
+PS				  BIT	      BC
+PSW				  DATA	      D0
+PT0				  BIT	      B9
+PT1				  BIT	      BB
+PX0				  BIT	      B8
+PX1				  BIT	      BA
+
+ASEM-51 V1.3                                         Copyright (c) 2002 by W.W. Heinz                                         PAGE 4
+
+
+
+SYMBOL				  TYPE     VALUE	LINE
+------------------------------------------------------------
+RB8				  BIT	      9A
+RD				  BIT	      B7
+REN				  BIT	      9C
+RESET				  CODE	    0000
+RI				  BIT	      98
+RS0				  BIT	      D3
+RS1				  BIT	      D4
+RXD				  BIT	      B0
+SBUF				  DATA	      99
+SCON				  DATA	      98
+SINT				  CODE	    0023
+SM0				  BIT	      9F
+SM1				  BIT	      9E
+SM2				  BIT	      9D
+SP				  DATA	      81
+T0				  BIT	      B4
+T1				  BIT	      B5
+TB8				  BIT	      9B
+TCON				  DATA	      88
+TF0				  BIT	      8D
+TF1				  BIT	      8F
+TH0				  DATA	      8C
+TH1				  DATA	      8D
+TI				  BIT	      99
+TIMER0				  CODE	    000B
+TIMER1				  CODE	    001B
+TL0				  DATA	      8A
+TL1				  DATA	      8B
+TMOD				  DATA	      89
+TR0				  BIT	      8C
+TR1				  BIT	      8E
+TXD				  BIT	      B1
+WR				  BIT	      B6
